@@ -33,17 +33,16 @@
       }
     }
     istry();
+    Object.beget = function (o) {
+      function F() {}
+      F.prototype = o;
+      return new F();
+    }
     Function.prototype.method = function (name,func) {
       console.log(this);
       this.prototype[name] = func;
       return this;
     }
-    function test(params) {
-      
-    }
-    test.method('test',function () {
-       console.log('test')
-    })
   </script>
 </body>
 </html>
