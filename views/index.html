@@ -13,5 +13,37 @@
     <input type="text" name="password" />
     <input type="submit"/>
   </form>
+  <script>
+    function add(a,b) {
+      const isNum1 = typeof a === 'number';
+      const isNum2 = typeof b === 'number';
+      if(!isNum1||!isNum2){
+        throw {
+          name:'TypeError',
+          message:'add need numbers'
+        }
+      }
+      return a+b;
+    }
+    function istry() {
+      try{
+        add('seven');
+      }catch(e){
+        console.log(e)
+      }
+    }
+    istry();
+    Function.prototype.method = function (name,func) {
+      console.log(this);
+      this.prototype[name] = func;
+      return this;
+    }
+    function test(params) {
+      
+    }
+    test.method('test',function () {
+       console.log('test')
+    })
+  </script>
 </body>
 </html>
