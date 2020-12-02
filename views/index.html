@@ -14,18 +14,9 @@
     <input type="file" id="file"/>
     <input type="submit"/>
   </form>
-  <script lang="javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="/script/index.js"></script>
   <script>
-    const fileElement = document.getElementById('file');
-    fileElement.onchange = function(){
-      const read = new FileReader();
-      read.onload = function(evt){
-        const data = new Uint8Array(evt.target.result);
-        const workbook = XLSX.read(data,{type:'array'});
-        console.log(workbook.Sheets.sheet1);
-      }
-      read.readAsArrayBuffer(this.files[0])
-    }
+
   </script>
 </body>
 </html>
