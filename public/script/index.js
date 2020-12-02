@@ -25,51 +25,79 @@ Function.method('inherits', function (Parent) {
   return this
 })
 
-function Mammal(name) {
-  this.name = name
-}
-
-Mammal.prototype.get_name = function () {
-  return this.name
-}
-
-function Cat(name) {
-  this.name = name
-  this.saying = 'meow'
-}
-Cat.inherits(Mammal).method('purr', function (n) {
-  var result = ''
-  for (var i = 0; i < n; i++) {
-    if (result) {
-      result += '-'
-    }
-    result += 'r'
+function insertAfter(newNode, targetNode) {
+  var parent = targetNode.parentNode
+  if (parent.lastChild === targetNode) {
+    parent.appenChild(newNode)
+  } else {
+    parent.insertBefore(newNode, targetNode.nextSibling)
   }
-  return result
-})
-
-const cat = new Cat('cc')
-console.log(cat)
-
-// 原型继承
-// 构造一个基础的对象，
-// 构造函数的机制构造新的对象，构造函数的prototype = 基础对象
-const mammalP = {
-  name: 'Herb MammalP',
-  get_name: function () {
-    return this.name
-  },
 }
 
-const catP = Object.beget(mammalP)
-catP.name = 'kitty'
-catP.purr = function (n) {
-  var result = ''
-  for (var i = 0; i < n; i++) {
-    if (result) {
-      result += '-'
-    }
-    result += 'r'
+function createGallery() {
+  var img = document.createElement('img')
+  img.setAttribute('id', 'cover')
+  img.setAttribute('src', '/image/back.jpg')
+  img.setAttribute('alt', 'cover')
+  var para = document.createElement('p')
+  para.setAttribute('id', 'description')
+  var txt = document.createTextNode('cover')
+  para.appendChild(txt)
+  var imagegallery = document.getElementById('imagegallery')
+  insertAfter(img, imagegallery)
+  insertAfter(para, img)
+}
+
+function imagegalleryPopuc() {
+  if (!document.getElementById) {
+    return false
   }
-  return result
+  if (!document.getElementsByTagName) {
+    return false
+  }
+  var imagegallery = document.getElementById('imagegallery')
+  if (!imagegallery) {
+    return false
+  }
+  var aList = imagegallery.getElementsByTagName('a')
+  for (var i = 0; i < aList.length; i++) {
+    aList[i].onclick = function () {
+      return !showPic(this)
+    }
+  }
 }
+
+function showPic(wishPic) {
+  var cover = document.getElementById('cover')
+  if (!cover) {
+    return false
+  }
+  if (cover.nodeName !== 'IMG') {
+    return false
+  }
+  var source = wishPic.getAttribute('href')
+  cover.setAttribute('src', source)
+  var description = document.getElementById('description')
+  if (description) {
+    var text = wishPic.getAttribute('title') || ''
+    if (description.firstChild.nodeType === 3) {
+      description.firstChild.nodeValue = text
+    }
+  }
+  return true
+}
+
+function addLoadEvent(fun) {
+  var oldOnload = window.onload
+  if (typeof window.onload !== 'function') {
+    window.onload = fun
+  } else {
+    window.onload = function () {
+      oldOnload()
+      fun()
+    }
+  }
+}
+
+addLoadEvent(createGallery)
+addLoadEvent(imagegalleryPopuc)
